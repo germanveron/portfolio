@@ -130,6 +130,7 @@ ul, ol { margin: 0; padding: 0; }
 .btn-primary:hover { background: var(--isar-hover); color: #fff; }
 .btn-secondary { background: transparent; color: var(--isar); border-color: var(--isar); }
 .btn-secondary:hover { background: var(--isar); color: #fff; }
+.btn-sm { min-height: 36px; padding: 0 16px; font-size: var(--t-sm); }
 
 .text-link {
   font-weight: 560;

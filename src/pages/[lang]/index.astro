@@ -32,15 +32,17 @@ const cv = lang === 'es' ? links.cvEs : links.cvEn;
 <Base t={t} other={other} title={t.meta.title} description={t.meta.description} paths={{ es: '/es/', en: '/en/' }} home>
     <main id="main">
       <section class="intro" id={t.ids.top} data-section="top">
-        <div class="wrap">
+        <div class="wrap intro-body">
           <h1>{t.intro.title.split('\n').map((line) => <span class="h1-line">{line}</span>)}</h1>
           <p class="intro-lead">{t.intro.lead}</p>
-          <div class="intro-actions">
-            <a class="btn btn-primary" href={`#${t.ids.ai}`}>{t.intro.ctaCases}</a>
-            <a class="btn btn-secondary" href={cv} download>{t.intro.ctaCv}</a>
-          </div>
           <p class="intro-location">{t.intro.location}</p>
+          <a class="btn btn-secondary btn-sm intro-cv" href={cv} download>{t.intro.ctaCv}</a>
         </div>
+        <!-- The main call to action sits at the bottom of the first screen and points down to the cases -->
+        <a class="intro-next" href={`#${t.ids.ai}`}>
+          <span class="btn btn-primary">{t.intro.ctaCases}</span>
+          <svg class="cue" aria-hidden="true" width="22" height="22" viewBox="0 0 22 22"><path d="M5 8l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
       </section>
 
       <section class="ai" id={t.ids.ai} data-section="ai" aria-labelledby="ai-title">
@@ -64,15 +66,15 @@ const cv = lang === 'es' ? links.cvEs : links.cvEn;
 </Base>
 
 <style>
-  /* The intro fills the first screen on its own; Applied AI starts after the first scroll */
+  /* The intro fills the first screen on its own; the main CTA sits at its bottom and points down */
   .intro {
     min-height: calc(100svh - var(--nav-h));
     display: flex;
-    align-items: center;
-    padding: 64px 0 96px;
+    flex-direction: column;
+    padding: 64px 0 32px;
     scroll-margin-top: var(--nav-h);
   }
-  .intro > .wrap { width: 100%; }
+  .intro-body { width: 100%; margin-block: auto; }
   .intro h1 {
     font-size: clamp(2.6rem, 5.6vw, var(--t-4xl));
     font-weight: 680;
@@ -88,18 +90,38 @@ const cv = lang === 'es' ? links.cvEs : links.cvEn;
     line-height: 1.5;
     color: var(--graphite);
   }
-  .intro-actions { margin-top: 36px; display: flex; flex-wrap: wrap; gap: 12px; }
-  .intro-location { margin-top: 28px; font-size: var(--t-sm); color: var(--graphite); }
+  .intro-location { margin-top: 24px; font-size: var(--t-sm); color: var(--graphite); }
+  .intro-cv { margin-top: 14px; }
+
+  .intro-next {
+    align-self: center;
+    margin-top: 56px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    color: var(--graphite);
+    text-decoration: none;
+  }
+  .intro-next:hover .btn-primary { background: var(--isar-hover); }
+  .intro-next:hover { color: var(--ink); }
+  .cue { animation: cue 1.8s ease-in-out infinite; }
+  @keyframes cue {
+    0%, 100% { transform: translateY(0); opacity: 0.55; }
+    50% { transform: translateY(6px); opacity: 1; }
+  }
+  @media (prefers-reduced-motion: reduce) { .cue { animation: none; } }
 
   .ai {
     padding-top: 32px;
     padding-bottom: 128px;
     scroll-margin-top: var(--nav-h);
   }
+  /* Same outer edges as the text column, so everything shares one margin */
   .cases {
-    max-width: 1440px;
+    max-width: calc(var(--wrap) + var(--gutter) * 2);
     margin: 0 auto;
-    padding: 0 12px;
+    padding: 0 var(--gutter);
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 12px;
@@ -110,8 +132,8 @@ const cv = lang === 'es' ? links.cvEs : links.cvEn;
     .cases { grid-template-columns: minmax(0, 1fr); }
   }
   @media (max-width: 720px) {
-    .intro { padding: 48px 0 72px; }
+    .intro { padding: 48px 0 24px; }
     .ai { padding-bottom: 88px; }
-    .cases { padding: 0 8px; gap: 8px; }
+    .cases { gap: 8px; }
   }
 </style>

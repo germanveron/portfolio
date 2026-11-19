@@ -78,7 +78,7 @@ export const en: Site = {
             scale: '~3M users',
             achievements: [
               'Took API Checkout from development to production with a Tech Lead, devs, QA and UX, growing it to <strong>~90% of revenue</strong> in the B2B line.',
-              'Launched BNPL in Tienda Personal with Lending, Risk and Fraud: the average ticket went from $250k to $450k ARS (<strong>+80%</strong>).',
+              'Launched BNPL in Tienda Personal with Lending, Risk and Fraud: the average ticket rose by <strong>80%</strong>.',
               'Found in the funnel that insufficient balance accounted for ~20% of cases and cut it to <strong>~5%</strong> by pushing Extra Pay, which covers the shortfall with a loan.',
               'Led the API hardening and a Developer Portal with a strategic partner, enabling <strong>10+ new merchants</strong> integrated per month.',
             ],

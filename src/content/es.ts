@@ -78,7 +78,7 @@ export const es: Site = {
             scale: '~3M usuarios',
             achievements: [
               'Llevé API Checkout de desarrollo a producción, con un equipo de Tech Lead, devs, QA y UX, hasta representar <strong>~90% del revenue</strong> de la línea B2B.',
-              'Lancé BNPL en Tienda Personal junto a Lending, Riesgo y Fraude: el ticket promedio pasó de $250k a $450k ARS (<strong>+80%</strong>).',
+              'Lancé BNPL en Tienda Personal junto a Lending, Riesgo y Fraude: el ticket promedio subió un <strong>80%</strong>.',
               'Detecté en el funnel que el saldo insuficiente concentraba ~20% de los casos y lo bajé a <strong>~5%</strong> impulsando Extra Pay, que completa el faltante con un préstamo.',
               'Lideré el robustecimiento de la API y un Developer Portal con un partner estratégico, que habilitó <strong>+10 comercios nuevos</strong> integrados por mes.',
             ],

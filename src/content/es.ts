@@ -8,7 +8,7 @@ export const es: Site = {
   meta: {
     title: 'Germán Verón | Product Management | IA Aplicada',
     description:
-      'Portfolio de Germán Verón, Product Manager de pagos y fintech. Productos y flujos de IA aplicada que diseñé y construí, y el impacto en Personal Pay y Mercado Libre.',
+      'Portfolio de Germán Verón, Product Management en pagos y fintech. Productos y flujos de IA aplicada que diseñé y construí, y el impacto en Personal Pay y Mercado Libre.',
   },
   ids: { top: 'inicio', ai: 'ia-aplicada', exp: 'experiencia', tools: 'herramientas', about: 'sobre-mi', contact: 'contacto' },
   nav: {

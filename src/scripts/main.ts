@@ -46,6 +46,12 @@ const setMenu = (open: boolean) => {
 };
 menuButton?.addEventListener('click', () => setMenu(menuButton.getAttribute('aria-expanded') !== 'true'));
 navLinks.forEach((a) => a.addEventListener('click', () => setMenu(false)));
+// Scrolling the page closes the mobile menu (a small threshold ignores jitter).
+let menuScrollStart = 0;
+menuButton?.addEventListener('click', () => { menuScrollStart = window.scrollY; });
+window.addEventListener('scroll', () => {
+  if (menuButton?.getAttribute('aria-expanded') === 'true' && Math.abs(window.scrollY - menuScrollStart) > 24) setMenu(false);
+}, { passive: true });
 
 /* ---------- Language menu: keeps the section you are reading ---------- */
 const langButton = document.querySelector<HTMLButtonElement>('[data-lang-button]');

@@ -6,7 +6,7 @@ export const en: Site = {
   lang: 'en',
   htmlLang: 'en',
   meta: {
-    title: 'Germán Verón, Product Manager | Applied AI',
+    title: 'Germán Verón | Product Management | Applied AI',
     description:
       'Portfolio of Germán Verón, a payments and fintech Product Manager. AI products and workflows I designed and built, plus my impact at Personal Pay and Mercado Libre.',
   },
@@ -29,7 +29,7 @@ export const en: Site = {
   intro: {
     name: 'Germán Verón',
     title: 'Product Manager & Product Owner\nin payments who builds with AI.',
-    lead: 'I bring experience in fintech and e‑commerce: I led API Checkout and BNPL at Personal Pay, after 10+ years in processes, operations and CX, including Mercado Libre. Here are five AI products and workflows I designed and built myself.',
+    lead: 'I bring experience in fintech, e‑commerce and payments: I led API Checkout and BNPL at Personal Pay, after 10+ years in processes, operations and Customer Experience, including Mercado Libre. Here are five AI products and workflows I designed and built myself.',
     ctaCases: 'See applied AI',
     ctaCv: 'Download CV',
     location: 'Currently based in Germany and open to remote work across Europe.',

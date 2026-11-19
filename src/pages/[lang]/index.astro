@@ -33,11 +33,6 @@ const flows = sorted.filter((c) => c.kind === 'flow');
         <div class="wrap intro-body">
           <h1>{t.intro.title.split('\n').map((line) => <span class="h1-line">{line}</span>)}</h1>
           <p class="intro-lead">{t.intro.lead}</p>
-          <!-- Phones: the screen is too short to pin the CTA to its bottom, so it follows the text -->
-          <a class="btn btn-primary intro-cta-inline" href={`#${t.ids.ai}`}>
-            {t.intro.ctaCases}
-            <svg class="cue" aria-hidden="true" width="18" height="18" viewBox="0 0 22 22"><path d="M5 8l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
           <p class="intro-location">{t.intro.location}</p>
         </div>
         <!-- The main call to action sits at the bottom of the first screen and points down to the cases -->
@@ -112,18 +107,11 @@ const flows = sorted.filter((c) => c.kind === 'flow');
     50% { transform: translateY(6px); opacity: 1; }
   }
   @media (prefers-reduced-motion: reduce) { .cue { animation: none; } }
-  .intro-cta-inline { display: none; }
-  /* Inside the button the arrow moves less, so it stays centred on the text */
-  .intro-cta-inline .cue { animation-name: cue-small; }
-  @keyframes cue-small {
-    0%, 100% { transform: translateY(-1px); opacity: 0.7; }
-    50% { transform: translateY(2px); opacity: 1; }
-  }
+  /* Phones: same cover as desktop, compact enough that the CTA stays above the browser's bottom bar */
   @media (max-width: 720px) {
-    .intro { min-height: 0; }
-    .intro-lead { font-size: 1.125rem; margin-top: 20px; }
-    .intro-cta-inline { display: inline-flex; margin-top: 28px; }
-    .intro-next { display: none; }
+    .intro-lead { font-size: var(--t-base); margin-top: 18px; }
+    .intro-location { margin-top: 18px; }
+    .intro-next { margin-top: 32px; gap: 6px; }
   }
 
   .ai {
@@ -146,7 +134,7 @@ const flows = sorted.filter((c) => c.kind === 'flow');
     .cases { grid-template-columns: minmax(0, 1fr); }
   }
   @media (max-width: 720px) {
-    .intro { padding: 48px 0 24px; }
+    .intro { padding: 32px 0 76px; }
     .ai { padding-bottom: 88px; }
     .cases { gap: 8px; }
   }

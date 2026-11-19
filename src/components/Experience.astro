@@ -1,0 +1,190 @@
+---
+import type { Site } from '../content/types';
+import { logos } from '../content/shared';
+
+interface Props { t: Site }
+const { t } = Astro.props;
+const e = t.exp;
+---
+<section class="section" id={t.ids.exp} data-section="exp" aria-labelledby="exp-title">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="exp-title">{e.title}</h2>
+      <p>{e.lead}</p>
+    </div>
+  </div>
+
+  <!-- Moving logo banner: grey by default, brand color on hover or focus -->
+  <div class="marquee-wrap" aria-label={e.logosLabel} role="region" data-marquee>
+  <button type="button" class="marquee-arrow marquee-arrow--prev" aria-label={e.logosPrev} data-marquee-prev>
+    <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16"><path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+  <button type="button" class="marquee-arrow marquee-arrow--next" aria-label={e.logosNext} data-marquee-next>
+    <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+  <div class="marquee">
+    <div class="marquee-track" data-marquee-track>
+      {[0, 1].map((copy) => (
+        <ul class="marquee-list" aria-hidden={copy === 1 ? 'true' : undefined}>
+          {logos.map((l) => (
+            <li>
+              <a href={`#${l.anchor}`} class="logo" tabindex={copy === 1 ? '-1' : undefined}>
+                {l.file ? <img src={l.file} alt={l.name} style={`height: ${l.height ?? 40}px`} /> : <span class="wordmark">{l.name}</span>}
+              </a>
+            </li>
+          ))}
+        </ul>
+      ))}
+    </div>
+  </div>
+  </div>
+
+  <div class="wrap">
+    <div class="companies">
+      {e.companies.map((co) => (
+        <article class="company" id={co.id} aria-labelledby={`${co.id}-name`}>
+          <div class="company-side">
+            <h3 id={`${co.id}-name`}>{co.name}</h3>
+            <p>{co.context}</p>
+          </div>
+          <div class="roles">
+            {co.roles.map((r) => (
+              <div class="role">
+                <h4>{r.title}</h4>
+                <p class="role-meta">{r.period}{r.scale && <span>, {r.scale}</span>}</p>
+                <ul>
+                  {r.achievements.map((a) => <li set:html={a} />)}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </article>
+      ))}
+
+      <article class="company" id="earlier" aria-labelledby="earlier-name">
+        <div class="company-side">
+          <h3 id="earlier-name">{e.earlierTitle}</h3>
+        </div>
+        <ul class="earlier">
+          {e.earlier.map((r) => (
+            <li>
+              <div class="earlier-row">
+                <span class="earlier-name">{r.name}</span>
+                <span class="earlier-period">{r.period}</span>
+              </div>
+              <p>{r.role}{r.note && <span>. {r.note}</span>}</p>
+            </li>
+          ))}
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<style>
+  .marquee-wrap {
+    position: relative;
+    margin-bottom: 64px;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .marquee-arrow {
+    position: absolute;
+    top: 50%;
+    z-index: 2;
+    transform: translateY(-50%);
+    display: grid; place-items: center;
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    background: var(--paper);
+    color: var(--ink);
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+  }
+  .marquee-arrow:hover { background: var(--mist); }
+  .marquee-arrow--prev { left: max(12px, calc((100vw - var(--wrap)) / 2 - 56px)); }
+  .marquee-arrow--next { right: max(12px, calc((100vw - var(--wrap)) / 2 - 56px)); }
+  .marquee {
+    position: relative;
+    overflow: hidden;
+    padding: 36px 0;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  }
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 36s linear infinite;
+  }
+  .marquee:hover .marquee-track,
+  .marquee:focus-within .marquee-track { animation-play-state: paused; }
+  /* With JS the banner is moved by script (so the arrows can push it) */
+  .marquee-wrap:global(.is-js) .marquee-track { animation: none; }
+  .marquee-list {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 96px;
+    padding-right: 96px;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    height: 48px;
+    text-decoration: none;
+    filter: grayscale(1);
+    opacity: 0.5;
+    transition: filter 0.25s ease, opacity 0.25s ease;
+  }
+  .logo:hover, .logo:focus-visible, .logo:active { filter: none; opacity: 1; }
+  .logo img { width: auto; max-width: 200px; }
+  .wordmark {
+    font-size: var(--t-lg);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+  @keyframes marquee { to { transform: translateX(-50%); } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-arrow { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee { -webkit-mask-image: none; mask-image: none; }
+    .marquee-track { animation: none; width: auto; justify-content: center; }
+    .marquee-list { flex-wrap: wrap; justify-content: center; gap: 32px 64px; padding: 0 var(--gutter); }
+    .marquee-list[aria-hidden='true'] { display: none; }
+  }
+
+  .company {
+    display: grid;
+    grid-template-columns: 280px minmax(0, 1fr);
+    gap: 16px 48px;
+    padding: 40px 0;
+    border-top: 1px solid var(--line);
+    scroll-margin-top: calc(var(--nav-h) + 16px);
+  }
+  .company-side h3 { font-size: var(--t-lg); }
+  .company-side p { margin-top: 6px; color: var(--graphite); }
+  .roles { display: grid; gap: 40px; }
+  .role h4 { font-size: var(--t-md); letter-spacing: -0.015em; }
+  .role-meta { margin-top: 4px; color: var(--graphite); font-size: var(--t-sm); }
+  .role ul { margin-top: 16px; padding-left: 1.1em; display: grid; gap: 10px; max-width: 70ch; }
+  .role :global(strong) { color: var(--ink); font-weight: 650; font-variant-numeric: tabular-nums; }
+
+  .earlier { list-style: none; display: grid; gap: 20px; max-width: 70ch; }
+  .earlier-row { display: flex; justify-content: space-between; gap: 16px; }
+  .earlier-name { font-weight: 600; color: var(--ink); }
+  .earlier-period { color: var(--graphite); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .earlier p { margin-top: 2px; color: var(--graphite); }
+
+  @media (max-width: 860px) {
+    .company { grid-template-columns: 1fr; }
+    .marquee-wrap { margin-bottom: 40px; }
+    .marquee { padding: 28px 0; }
+    .marquee-arrow { width: 36px; height: 36px; }
+    .marquee-list { gap: 64px; padding-right: 64px; }
+  }
+</style>

@@ -1,0 +1,269 @@
+---
+import { Image } from 'astro:assets';
+import type { Case, Site } from '../content/types';
+
+interface Props { c: Case; t: Site }
+const { c, t } = Astro.props;
+const rows = [
+  { label: t.ui.what, text: c.what },
+  { label: t.ui.problem, text: c.problem },
+  { label: t.ui.audience, text: c.audience },
+  { label: t.ui.built, text: c.built },
+  { label: t.ui.stack, text: c.stack },
+];
+---
+<div class="panel">
+  <dl class="facts">
+    {rows.map((r) => (
+      <div class="fact">
+        <dt>{r.label}</dt>
+        <dd>{r.text}</dd>
+      </div>
+    ))}
+    <div class="fact">
+      <dt>{t.ui.delivered}</dt>
+      <dd><ul class="delivered">{c.delivered.map((d) => <li>{d}</li>)}</ul></dd>
+    </div>
+  </dl>
+
+  {c.flow && (
+    <div class="stepper" data-stepper>
+      <h4>{c.flow.title}</h4>
+      <div class="steps" role="tablist" aria-label={c.flow.title}>
+        {c.flow.steps.map((s, i) => (
+          <button type="button" role="tab" class="step" id={`${c.id}-step-${i}`}
+            aria-selected={i === 0 ? 'true' : 'false'} aria-controls={`${c.id}-step-panel-${i}`}
+            tabindex={i === 0 ? '0' : '-1'}>
+            <span class="step-num" aria-hidden="true">{i + 1}</span>
+            <span class="step-title">{s.title}</span>
+          </button>
+        ))}
+      </div>
+      {c.flow.steps.map((s, i) => (
+        <div class="step-panel" role="tabpanel" id={`${c.id}-step-panel-${i}`} aria-labelledby={`${c.id}-step-${i}`} hidden={i !== 0}>
+          <p class="step-count">{t.ui.stepOf(i + 1, c.flow!.steps.length)}</p>
+          <p class="step-text">{s.text}</p>
+        </div>
+      ))}
+      <div class="step-nav">
+        <button type="button" class="btn btn-secondary" data-step-prev disabled>{t.ui.prevStep}</button>
+        <button type="button" class="btn btn-primary" data-step-next>{t.ui.nextStep}</button>
+      </div>
+    </div>
+  )}
+
+  {c.evals && (
+    <div class="evals">
+      <h4>{c.evals.title}</h4>
+      <p>{c.evals.text}</p>
+      {c.evals.result && <p class="evals-result">{c.evals.result}</p>}
+      {c.evals.pending && <p class="pending evals-pending">{c.evals.pending}</p>}
+    </div>
+  )}
+
+  <div class="gallery" data-gallery>
+    <div class="gallery-head">
+      <h4>{t.ui.evidence}</h4>
+      <div class="gallery-nav">
+        <button type="button" class="round" data-gallery-prev aria-label={t.ui.prevImage}>
+          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16"><path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="round" data-gallery-next aria-label={t.ui.nextImage}>
+          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+    <ul class:list={["gallery-track", c.device === "phone" && "gallery-track--phone"]} data-gallery-track tabindex="0" aria-label={t.ui.evidence}>
+      {c.evidence.map((e) => (
+        <li>
+          <figure>
+            {e.image ? (
+              <Image src={e.image} alt={e.caption} widths={[600, 1000]} sizes="(max-width: 720px) 85vw, 560px" class="gallery-img" />
+            ) : (
+              <div class="pending gallery-pending">{t.ui.pendingShot}</div>
+            )}
+            <figcaption>{e.caption}</figcaption>
+          </figure>
+        </li>
+      ))}
+    </ul>
+  </div>
+
+  {c.link && (
+    <p class="panel-link">
+      <a class="btn btn-primary" href={c.link} target="_blank" rel="noopener">{t.ui.openApp}<span class="visually-hidden"> {c.title}</span></a>
+    </p>
+  )}
+</div>
+
+<style>
+  .panel {
+    grid-column: 1 / -1;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--r-tile);
+    padding: 48px;
+    text-align: left;
+    scroll-margin-top: calc(var(--nav-h) + 12px);
+  }
+  .panel-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 36px;
+  }
+  .panel-top h3 { font-size: var(--t-xl); outline: none; }
+  .close {
+    display: inline-flex; align-items: center; gap: 8px;
+    min-height: 40px; padding: 0 14px;
+    background: var(--mist); color: var(--ink);
+    border: 0; border-radius: 999px;
+    font: inherit; font-size: var(--t-sm); font-weight: 560;
+    cursor: pointer; white-space: nowrap;
+  }
+  .close:hover { background: #e6e8eb; }
+
+  h4 { font-size: var(--t-md); letter-spacing: -0.015em; }
+
+  .facts { margin: 0; }
+  .fact {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 66ch);
+    gap: 8px 32px;
+    padding: 18px 0;
+    border-top: 1px solid var(--line);
+  }
+  .fact:first-child { border-top: 0; padding-top: 0; }
+  .fact dt { font-weight: 600; color: var(--ink); }
+  .fact dd { margin: 0; }
+  .delivered { padding-left: 1.1em; display: grid; gap: 6px; }
+
+  .stepper, .evals, .gallery { margin-top: 56px; }
+
+  .steps {
+    margin-top: 20px;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    padding: 4px;
+  }
+  .step {
+    position: relative;
+    flex: 1 1 0;
+    min-width: 132px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 0 12px 14px 0;
+    background: none;
+    border: 0;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    color: var(--graphite);
+  }
+  /* Line joining the step markers */
+  .step::after {
+    content: '';
+    position: absolute;
+    top: 17px;
+    left: 40px;
+    right: 4px;
+    height: 1.5px;
+    background: var(--line);
+  }
+  .step:last-child::after { display: none; }
+  .step-num {
+    display: grid; place-items: center;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: 1.5px solid #b9bcc4;
+    background: var(--paper);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  }
+  .step-title { font-size: var(--t-sm); font-weight: 560; line-height: 1.3; }
+  .step:hover .step-num { border-color: var(--ink); }
+  .step:global(.is-done) .step-num { border-color: var(--ink); color: var(--ink); }
+  .step[aria-selected='true'] { color: var(--ink); }
+  .step[aria-selected='true'] .step-num { background: var(--ink); border-color: var(--ink); color: #fff; }
+
+  .step-panel {
+    margin-top: 12px;
+    padding: 24px 28px;
+    background: var(--mist);
+    border-radius: 16px;
+    min-height: 120px;
+  }
+  .step-count { font-size: var(--t-sm); color: var(--graphite); }
+  .step-text { margin-top: 6px; font-size: var(--t-md); line-height: 1.45; color: var(--ink); max-width: 60ch; }
+  .step-nav { margin-top: 16px; display: flex; gap: 12px; }
+  .step-nav .btn:disabled { opacity: 0.4; cursor: default; }
+  .step-nav .btn-secondary:disabled:hover { background: transparent; color: var(--isar); }
+
+  .evals p { margin-top: 10px; max-width: 66ch; }
+  .evals-pending { margin-top: 16px; max-width: 520px; }
+  .evals-result { margin-top: 16px; padding: 18px 22px; background: var(--mist); border-radius: 14px; color: var(--ink); font-weight: 560; max-width: 66ch; }
+  /* Wide screenshots are shown whole (never cropped), letterboxed on a light background */
+  .gallery-track :global(.gallery-img) { object-fit: contain; background: var(--mist); }
+
+  .gallery-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .gallery-nav { display: flex; gap: 8px; }
+  .round {
+    display: grid; place-items: center;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    background: var(--paper);
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .round:hover { background: var(--mist); }
+  .gallery-track {
+    list-style: none;
+    margin-top: 20px;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: min(560px, 85%);
+    gap: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    padding-bottom: 8px;
+    border-radius: var(--r-shot);
+  }
+  .gallery-track li { scroll-snap-align: start; }
+  .gallery-track figure { margin: 0; }
+  .gallery-track :global(.gallery-img) {
+    width: 100%; height: auto;
+    aspect-ratio: 16 / 10;
+    object-fit: contain; background: var(--mist);
+    border-radius: var(--r-shot);
+    border: 1px solid var(--line);
+  }
+  .gallery-pending { aspect-ratio: 16 / 10; }
+  /* Phone screenshots: narrower columns, full screen visible */
+  .gallery-track--phone { grid-auto-columns: 220px; }
+  .gallery-track--phone :global(.gallery-img) { aspect-ratio: auto; border-radius: 22px; }
+  figcaption { margin-top: 10px; font-size: var(--t-sm); color: var(--graphite); }
+
+  .panel-link { margin-top: 48px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .gallery-track { scroll-behavior: auto; }
+  }
+
+  @media (max-width: 720px) {
+    .panel { padding: 28px 20px; }
+    .panel-top { flex-direction: column-reverse; }
+    .fact { grid-template-columns: minmax(0, 1fr); }
+    /* Vertical stepper on phones */
+    .steps { flex-direction: column; overflow: visible; }
+    .step { flex-direction: row; align-items: center; min-width: 0; padding: 0 0 14px; }
+    .step::after { top: 40px; left: 17px; right: auto; width: 1.5px; height: 14px; }
+    .step-nav .btn { flex: 1; }
+  }
+</style>

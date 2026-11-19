@@ -1,0 +1,34 @@
+---
+// Circular flags drawn inline: Spain (civil flag) and United Kingdom.
+interface Props { code: 'es' | 'en' }
+const { code } = Astro.props;
+---
+<span class="flag" aria-hidden="true">
+  {code === 'es' ? (
+    <svg viewBox="0 0 512 512">
+      <rect width="512" height="512" fill="#AA151B" />
+      <rect y="128" width="512" height="256" fill="#F1BF00" />
+    </svg>
+  ) : (
+    <svg viewBox="0 0 512 512">
+      <rect width="512" height="512" fill="#012169" />
+      <path d="M0 0L512 512M512 0L0 512" stroke="#fff" stroke-width="96" />
+      <path d="M0 0L512 512M512 0L0 512" stroke="#C8102E" stroke-width="32" />
+      <path d="M256 0V512M0 256H512" stroke="#fff" stroke-width="160" />
+      <path d="M256 0V512M0 256H512" stroke="#C8102E" stroke-width="96" />
+    </svg>
+  )}
+</span>
+
+<style>
+  .flag {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex: none;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
+  }
+  .flag svg { width: 100%; height: 100%; display: block; }
+</style>

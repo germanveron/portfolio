@@ -1,0 +1,42 @@
+---
+// Shared page shell: head, skip link, header and scripts. Used by the home and by each case page.
+import '@fontsource-variable/schibsted-grotesk';
+import '../styles/global.css';
+import type { Site } from '../content/types';
+import Nav from '../components/Nav.astro';
+
+interface Props {
+  t: Site;
+  other: Site;
+  title: string;
+  description: string;
+  /** Path of this same page in each language, e.g. { es: '/es/bitacora/', en: '/en/bitacora/' } */
+  paths: { es: string; en: string };
+  home?: boolean;
+}
+const { t, other, title, description, paths, home = false } = Astro.props;
+---
+<!doctype html>
+<html lang={t.htmlLang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="alternate" hreflang="es" href={paths.es} />
+    <link rel="alternate" hreflang="en" href={paths.en} />
+    <link rel="alternate" hreflang="x-default" href={paths.en} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{t.nav.skip}</a>
+    <Nav t={t} other={other} home={home} paths={paths} />
+    <slot />
+    <script>
+      import '../scripts/main.ts';
+    </script>
+  </body>
+</html>

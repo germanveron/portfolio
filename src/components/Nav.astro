@@ -1,0 +1,170 @@
+---
+import type { Site } from '../content/types';
+import Flag from './Flag.astro';
+
+interface Props { t: Site; other: Site; home?: boolean; paths: { es: string; en: string } }
+const { t, other, home = false, paths } = Astro.props;
+// On the home, section links are plain anchors; on a case page they go back to the home.
+const base = home ? '' : `/${t.lang}/`;
+const languages = [
+  { site: t, name: t.lang === 'es' ? 'Español' : 'English' },
+  { site: other, name: other.lang === 'es' ? 'Español' : 'English' },
+].sort((a, b) => (a.site.lang === 'es' ? -1 : 1));
+---
+<header class="nav" data-nav>
+  <div class="nav-inner wrap">
+    <a class="nav-name" href={`${base}#${t.ids.top}`}>{t.intro.name}</a>
+
+    <nav aria-label={t.nav.label} class="nav-links" id="nav-links" data-nav-links>
+      <ul>
+        {t.nav.items.map((item) => (
+          <li><a href={`${base}#${t.ids[item.key]}`} data-key={item.key}>{item.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="nav-tools">
+      <div class="lang" data-lang>
+        <button type="button" class="lang-button" aria-expanded="false" aria-controls="lang-menu" data-lang-button>
+          <Flag code={t.lang} />
+          <span>{t.lang.toUpperCase()}</span>
+          <span class="visually-hidden">, {t.nav.language}</span>
+          <svg class="chev" aria-hidden="true" width="12" height="12" viewBox="0 0 12 12"><path d="M2.5 4.5L6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <ul class="lang-menu" id="lang-menu" hidden data-lang-menu>
+          {languages.map(({ site, name }) => (
+            <li>
+              <a
+                href={paths[site.lang]}
+                hreflang={site.htmlLang}
+                lang={site.htmlLang}
+                aria-current={site.lang === t.lang ? 'true' : undefined}
+                data-lang-link
+                data-ids={home ? JSON.stringify(site.ids) : undefined}
+              >
+                <Flag code={site.lang} />
+                <span>{name}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <button type="button" class="menu-button" aria-expanded="false" aria-controls="nav-links" data-menu-button
+        data-open-label={t.nav.menu} data-close-label={t.nav.close}>
+        {t.nav.menu}
+      </button>
+    </div>
+  </div>
+</header>
+
+<style>
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(255, 255, 255, 0.86);
+    backdrop-filter: saturate(180%) blur(16px);
+    -webkit-backdrop-filter: saturate(180%) blur(16px);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease;
+  }
+  .nav:global(.is-scrolled) { border-bottom-color: var(--line); }
+
+  .nav-inner {
+    height: var(--nav-h);
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+  .nav-name {
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 620;
+    font-size: 1.125rem; /* 18px */
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+  }
+  .nav-links { margin-left: auto; }
+  .nav-links ul { list-style: none; display: flex; gap: 4px; }
+  .nav-links a {
+    display: block;
+    padding: 8px 12px;
+    color: var(--graphite);
+    text-decoration: none;
+    font-size: var(--t-sm);
+    font-weight: 500;
+    border-radius: var(--r-ctl);
+    transition: color 0.15s ease;
+  }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-links a[aria-current='location'] { color: var(--ink); box-shadow: inset 0 -2px 0 var(--ink); border-radius: 0; }
+
+  .nav-tools { display: flex; align-items: center; gap: 8px; }
+
+  .lang { position: relative; }
+  .lang-button {
+    display: inline-flex; align-items: center; gap: 8px;
+    min-height: 40px; padding: 0 12px;
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    font: inherit; font-size: var(--t-sm); font-weight: 560;
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .lang-button:hover { border-color: #c9ccd3; }
+  .lang-button[aria-expanded='true'] .chev { transform: rotate(180deg); }
+  .chev { transition: transform 0.15s ease; }
+
+  .lang-menu {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 8px);
+    min-width: 200px;
+    list-style: none;
+    padding: 6px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+  }
+  .lang-menu a {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 14px;
+    border-radius: var(--r-ctl);
+    color: var(--ink);
+    text-decoration: none;
+    font-size: var(--t-base);
+  }
+  .lang-menu a:hover { background: var(--mist); }
+  .lang-menu a[aria-current='true'] { box-shadow: inset 0 0 0 1.5px var(--isar); }
+
+  .menu-button {
+    display: none;
+    min-height: 40px; padding: 0 14px;
+    background: var(--ink); color: var(--paper);
+    border: 0; border-radius: 999px;
+    font: inherit; font-size: var(--t-sm); font-weight: 560;
+    cursor: pointer;
+  }
+
+  @media (max-width: 900px) {
+    .nav-inner { gap: 12px; }
+    .nav-tools { margin-left: auto; }
+    .menu-button { display: inline-flex; align-items: center; }
+    .nav-links {
+      position: absolute;
+      left: 0; right: 0; top: var(--nav-h);
+      margin: 0;
+      background: var(--paper);
+      border-bottom: 1px solid var(--line);
+      display: none;
+    }
+    .nav-links:global(.is-open) { display: block; }
+    .nav-links ul { flex-direction: column; gap: 0; padding: 8px var(--gutter) 16px; }
+    .nav-links a { padding: 14px 0; font-size: var(--t-md); color: var(--ink); border-radius: 0; }
+    .nav-links li + li a { border-top: 1px solid var(--line); }
+    .nav-links a[aria-current='location'] { box-shadow: none; color: var(--isar); }
+  }
+</style>

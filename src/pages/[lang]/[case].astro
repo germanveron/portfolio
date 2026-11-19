@@ -1,0 +1,87 @@
+---
+// One page per AI case: /es/bitacora/, /en/agente-bugs/, ...
+import Base from '../../layouts/Base.astro';
+import CasePanel from '../../components/CasePanel.astro';
+import { es } from '../../content/es';
+import { en } from '../../content/en';
+
+export function getStaticPaths() {
+  return [es, en].flatMap((site) =>
+    site.cases.map((c) => ({ params: { lang: site.lang, case: c.id }, props: { caseId: c.id } })),
+  );
+}
+
+const { lang } = Astro.params;
+const { caseId } = Astro.props;
+const t = lang === 'es' ? es : en;
+const other = lang === 'es' ? en : es;
+const c = t.cases.find((x) => x.id === caseId)!;
+// "Back" returns to this case on the home page.
+const backHref = `/${t.lang}/#${c.id}`;
+---
+<Base
+  t={t}
+  other={other}
+  title={`${c.title} | ${t.intro.name}`}
+  description={c.tagline}
+  paths={{ es: `/es/${c.id}/`, en: `/en/${c.id}/` }}
+>
+  <main id="main" class="case-page">
+    <div class="wrap">
+      <a class="back" href={backHref} data-back>
+        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16"><path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        {t.ui.back}
+      </a>
+
+      <header class="case-head">
+        <h1>{c.title}</h1>
+        <p class="case-tagline">{c.tagline}</p>
+        {c.link && (
+          <p class="case-actions">
+            <a class="btn btn-primary" href={c.link} target="_blank" rel="noopener">{t.ui.openApp}<span class="visually-hidden"> {c.title}</span></a>
+          </p>
+        )}
+      </header>
+
+      <CasePanel c={c} t={t} />
+
+      <a class="back back--bottom" href={backHref} data-back>
+        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16"><path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        {t.ui.back}
+      </a>
+    </div>
+  </main>
+</Base>
+
+<style>
+  .case-page { padding: 40px 0 112px; }
+  .back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 40px;
+    padding: 0 16px 0 12px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 560;
+    font-size: var(--t-sm);
+  }
+  .back:hover { background: var(--mist); color: var(--ink); }
+  .back--bottom { margin-top: 48px; }
+
+  .case-head { margin: 48px 0 40px; max-width: 760px; }
+  .case-head h1 {
+    margin-top: 8px;
+    font-size: clamp(2.2rem, 4.6vw, var(--t-4xl));
+    letter-spacing: -0.03em;
+  }
+  .case-tagline { margin-top: 14px; font-size: var(--t-md); color: var(--graphite); line-height: 1.45; }
+  .case-actions { margin-top: 28px; }
+
+  @media (max-width: 720px) {
+    .case-page { padding: 24px 0 80px; }
+    .case-head { margin: 32px 0 28px; }
+  }
+</style>

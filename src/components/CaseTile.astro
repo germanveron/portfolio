@@ -1,0 +1,195 @@
+---
+import { Image } from 'astro:assets';
+import type { Case, Site } from '../content/types';
+
+interface Props { c: Case; t: Site }
+const { c, t } = Astro.props;
+const host = c.link ? new URL(c.link).host : '';
+---
+<article class:list={['tile', `tile--${c.theme}`, `tile--${c.kind}`]} id={c.id} aria-labelledby={`${c.id}-title`}>
+  <div class="tile-head">
+    <h3 id={`${c.id}-title`}>{c.title}</h3>
+    <p class="tagline">{c.tagline}</p>
+    {c.feeds && (
+      <p class="feeds">{c.feeds.text} <a href={`#${c.feeds.target}`}>{c.feeds.label}</a>.</p>
+    )}
+    <div class="actions">
+      <a class="btn btn-primary" href={`/${t.lang}/${c.id}/`}>{t.ui.open}<span class="visually-hidden"> {c.title}</span></a>
+      {c.link && (
+        <a class="text-link app-link" href={c.link} target="_blank" rel="noopener">
+          {t.ui.openApp}<span class="visually-hidden"> {c.title}</span>
+          <svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14"><path d="M4.5 2.5h7v7M11.5 2.5l-9 9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      )}
+    </div>
+  </div>
+
+  {c.kind === 'product' && c.shot && (
+    <figure class="frame">
+      <div class="frame-bar" aria-hidden="true"><span class="frame-url">{host}</span></div>
+      <Image src={c.shot} alt={c.shotAlt ?? ''} widths={[640, 1000, 1400, 2000]} sizes="(max-width: 1100px) 92vw, 1000px" class="frame-img" />
+    </figure>
+  )}
+
+  {c.device === 'phone' && c.phones && (
+    <div class="phones">
+      {c.phones.map((p, i) => (
+        <figure class:list={['phone', i === 1 ? 'phone--main' : 'phone--side']}>
+          <Image src={p.image} alt={p.alt} widths={[300, 600]} sizes={i === 1 ? '300px' : '250px'} class="phone-img" />
+        </figure>
+      ))}
+    </div>
+  )}
+
+  {c.kind === 'flow' && c.miniFlow && (
+    <ol class="mini-flow" aria-label={c.flow?.title}>
+      {c.miniFlow.map((node) => <li><span>{node}</span></li>)}
+    </ol>
+  )}
+</article>
+
+<style>
+  .tile {
+    border-radius: var(--r-tile);
+    padding: 64px 32px 0;
+    text-align: center;
+    overflow: hidden;
+    scroll-margin-top: calc(var(--nav-h) + 12px);
+    display: flex;
+    flex-direction: column;
+  }
+  .tile--mist { background: var(--mist); }
+  /* Between the page white and the dark grey case */
+  .tile--steel { background: #dee1e6; }
+  .tile--black { background: var(--ink); color: #c7c8cc; }
+  /* Dark grey: a second dark case, clearly different from the black one */
+  .tile--graphite { background: #2c2d31; color: #c7c8cc; }
+  .tile--black h3, .tile--graphite h3 { color: #fff; }
+  .tile--black .tagline, .tile--graphite .tagline { color: #b0b1b6; }
+  .tile--black .app-link, .tile--graphite .app-link { color: var(--isar-on-dark); }
+  .tile--black :focus-visible, .tile--graphite :focus-visible { outline-color: #fff; }
+  .tile--graphite .frame { box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.10); }
+
+  .tile-head { max-width: 680px; margin: 0 auto; }
+  .tile h3 { font-size: clamp(2rem, 4vw, var(--t-3xl)); }
+  .tagline {
+    margin-top: 12px;
+    font-size: var(--t-md);
+    line-height: 1.4;
+    color: var(--graphite);
+  }
+  .feeds { margin-top: 12px; font-size: var(--t-sm); color: var(--graphite); }
+
+  .actions {
+    margin-top: 28px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 12px 28px;
+  }
+  .app-link { display: inline-flex; align-items: center; gap: 6px; }
+
+  .frame {
+    margin: 48px auto 0;
+    width: min(1000px, 100%);
+    border-radius: var(--r-shot) var(--r-shot) 0 0;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 -2px 30px rgba(0, 0, 0, 0.10);
+  }
+  .tile--black .frame { box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12); }
+  .frame-bar {
+    display: flex;
+    justify-content: center;
+    padding: 9px 16px;
+    background: #f7f7f8;
+    border-bottom: 1px solid var(--line);
+  }
+  .frame-url {
+    max-width: 100%;
+    padding: 3px 14px;
+    background: #ececee;
+    border-radius: 999px;
+    font-size: 12px;
+    color: var(--graphite);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .frame :global(.frame-img) {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    object-position: top;
+  }
+
+  /* Phone app: three phones, the middle one in front; they bleed off the bottom of the tile */
+  .phones {
+    margin: 56px auto 0;
+    height: 520px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 28px;
+    overflow: hidden;
+  }
+  .phone {
+    margin: 0;
+    flex: none;
+    padding: 9px;
+    background: #1d1d1f;
+    border-radius: 46px;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.16);
+  }
+  .phone--main { width: 300px; }
+  .phone--side { width: 252px; margin-top: 72px; opacity: 0.92; }
+  .phone :global(.phone-img) {
+    width: 100%;
+    height: auto;
+    border-radius: 38px;
+  }
+
+  /* Flow tiles: half width, diagram instead of a screenshot */
+  .tile--flow { padding: 56px 28px 48px; }
+  .tile--flow h3 { font-size: clamp(1.75rem, 2.6vw, var(--t-2xl)); }
+  .mini-flow {
+    list-style: none;
+    margin: 40px auto 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10px 0;
+  }
+  .mini-flow li {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    font-size: var(--t-sm);
+    font-weight: 560;
+    color: var(--ink);
+  }
+  .mini-flow span {
+    padding: 8px 12px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--r-ctl);
+  }
+  /* Connector line between nodes */
+  .mini-flow li + li::before {
+    content: '';
+    width: 18px;
+    height: 1.5px;
+    background: #9a9da5;
+  }
+  @media (max-width: 720px) {
+    .tile { padding: 48px 20px 0; }
+    .tile--flow { padding: 44px 20px 36px; }
+    .frame { margin-top: 36px; }
+    .phones { height: 400px; margin-top: 40px; }
+    .phone--side { display: none; }
+    .phone--main { width: 240px; }
+  }
+</style>

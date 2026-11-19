@@ -1,0 +1,119 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import * as icons from 'simple-icons';
+import type { Site } from '../content/types';
+
+interface Props { t: Site }
+const { t } = Astro.props;
+
+// Vector icons from Simple Icons (with their brand color for hover).
+function simpleIcon(slug?: string): { path: string; hex: string } | undefined {
+  if (!slug) return undefined;
+  const key = `si${slug.charAt(0).toUpperCase()}${slug.slice(1)}`;
+  return (icons as Record<string, { path: string; hex: string } | undefined>)[key];
+}
+// Raster logos for brands Simple Icons doesn't have: src/assets/tools/<name>.png, referenced as 'img:<name>'.
+const rasters = import.meta.glob<{ default: ImageMetadata }>('../assets/tools/*.png', { eager: true });
+function rasterIcon(icon?: string): ImageMetadata | undefined {
+  if (!icon?.startsWith('img:')) return undefined;
+  return rasters[`../assets/tools/${icon.slice(4)}.png`]?.default;
+}
+const initials = (name: string) => name.split(/\s+/).map((w) => w[0]).join('').slice(0, 2);
+// Tableau mark: crosses of different sizes (drawn here so it stays crisp and monochrome).
+const tableauCrosses: [number, number, number][] = [[12, 12, 5], [12, 3.2, 2.6], [12, 20.8, 2.6], [3.2, 12, 2.6], [20.8, 12, 2.6], [6, 6, 3.4], [18, 6, 3.4], [6, 18, 3.4], [18, 18, 3.4]];
+const crossPath = tableauCrosses.map(([x, y, r]) => `M${x - r} ${y}H${x + r}M${x} ${y - r}V${y + r}`).join('');
+---
+<section class="section tools-section" id={t.ids.tools} data-section="tools" aria-labelledby="tools-title">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="tools-title">{t.tools.title}</h2>
+      <p>{t.tools.lead}</p>
+    </div>
+
+    <div class="groups">
+      {t.tools.groups.map((g) => (
+        <div class="group">
+          <h3>{g.title}</h3>
+          <ul>
+            {g.items.map((item) => {
+              const si = simpleIcon(item.icon);
+              const raster = rasterIcon(item.icon);
+              return (
+                <li class="tool" style={si ? `--brand: #${si.hex}` : item.icon === "tableau" ? "--brand: #E97627" : undefined}>
+                  <span class="icon" aria-hidden="true">
+                    {item.icon === 'agent' ? (
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="4" y="7" width="16" height="12" rx="3" />
+                        <path d="M12 3v4M9 12h.01M15 12h.01M9.5 15.5h5" />
+                      </svg>
+                    ) : item.icon === "tableau" ? (
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="butt"><path d={crossPath} /></svg>
+                    ) : si ? (
+                      <svg viewBox="0 0 24 24" fill="currentColor"><path d={si.path} /></svg>
+                    ) : raster ? (
+                      <Image src={raster} alt="" width={48} class="raster" />
+                    ) : (
+                      <span class="mono">{initials(item.name)}</span>
+                    )}
+                  </span>
+                  <span class="tool-text">
+                    <span class="tool-name">{item.name}</span>
+                    <span class="tool-use">{item.use}</span>
+                  </span>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .tools-section { background: var(--mist); }
+  .groups {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 56px 64px;
+  }
+  .group h3 {
+    font-size: var(--t-md);
+    letter-spacing: -0.015em;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #d9dbe0;
+  }
+  .group ul { list-style: none; margin-top: 8px; }
+  .tool {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 0;
+  }
+  .icon {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: var(--paper);
+    color: var(--ink);
+    box-shadow: inset 0 0 0 1px var(--line);
+  }
+  .icon svg { width: 24px; height: 24px; }
+  /* Same idea as the logo banner: neutral by default, brand color on hover */
+  .icon { transition: color 0.2s ease; overflow: hidden; }
+  .tool:hover .icon { color: var(--brand, var(--ink)); }
+  .icon :global(.raster) { width: 30px; height: 30px; object-fit: contain; border-radius: 6px; filter: grayscale(1) contrast(1.15); transition: filter 0.2s ease; }
+  .tool:hover .icon :global(.raster) { filter: none; }
+  .mono { font-weight: 700; font-size: 15px; letter-spacing: -0.02em; }
+  .tool-text { display: grid; gap: 1px; }
+  .tool-name { font-weight: 600; color: var(--ink); }
+  .tool-use { font-size: var(--t-sm); color: var(--graphite); line-height: 1.4; }
+
+  @media (max-width: 860px) {
+    .groups { grid-template-columns: 1fr; gap: 40px; }
+  }
+</style>

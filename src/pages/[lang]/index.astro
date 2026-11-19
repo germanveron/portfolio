@@ -1,0 +1,117 @@
+---
+import type { ImageMetadata } from 'astro';
+import { es } from '../../content/es';
+import { en } from '../../content/en';
+import { links } from '../../content/shared';
+import Base from '../../layouts/Base.astro';
+import CaseTile from '../../components/CaseTile.astro';
+import Experience from '../../components/Experience.astro';
+import Tools from '../../components/Tools.astro';
+import About from '../../components/About.astro';
+import Contact from '../../components/Contact.astro';
+
+export function getStaticPaths() {
+  return [{ params: { lang: 'es' } }, { params: { lang: 'en' } }];
+}
+
+const { lang } = Astro.params;
+const t = lang === 'es' ? es : en;
+const other = lang === 'es' ? en : es;
+
+// Photo: add src/assets/photo.jpg and it shows up automatically.
+const photoFiles = import.meta.glob<{ default: ImageMetadata }>('../../assets/photo.{jpg,jpeg,png,webp}', { eager: true });
+const photo = Object.values(photoFiles)[0]?.default;
+
+// Display order of the cases (ids are the same in both languages)
+const order = ['bitacora', 'resenas', 'entrevistas', 'agente-bugs', 'informe-resenas'];
+const sorted = [...t.cases].sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id));
+const products = sorted.filter((c) => c.kind === 'product');
+const flows = sorted.filter((c) => c.kind === 'flow');
+const cv = lang === 'es' ? links.cvEs : links.cvEn;
+---
+<Base t={t} other={other} title={t.meta.title} description={t.meta.description} paths={{ es: '/es/', en: '/en/' }} home>
+    <main id="main">
+      <section class="intro" id={t.ids.top} data-section="top">
+        <div class="wrap">
+          <h1>{t.intro.title.split('\n').map((line) => <span class="h1-line">{line}</span>)}</h1>
+          <p class="intro-lead">{t.intro.lead}</p>
+          <div class="intro-actions">
+            <a class="btn btn-primary" href={`#${t.ids.ai}`}>{t.intro.ctaCases}</a>
+            <a class="btn btn-secondary" href={cv} download>{t.intro.ctaCv}</a>
+          </div>
+          <p class="intro-location">{t.intro.location}</p>
+        </div>
+      </section>
+
+      <section class="ai" id={t.ids.ai} data-section="ai" aria-labelledby="ai-title">
+        <div class="wrap">
+          <div class="section-head">
+            <h2 id="ai-title">{t.ai.title}</h2>
+            <p>{t.ai.lead}</p>
+          </div>
+        </div>
+        <div class="cases">
+          {products.map((c) => <CaseTile c={c} t={t} />)}
+          {flows.map((c) => <CaseTile c={c} t={t} />)}
+        </div>
+      </section>
+
+      <Experience t={t} />
+      <Tools t={t} />
+      <About t={t} photo={photo} />
+      <Contact t={t} />
+    </main>
+</Base>
+
+<style>
+  /* The intro fills the first screen on its own; Applied AI starts after the first scroll */
+  .intro {
+    min-height: calc(100svh - var(--nav-h));
+    display: flex;
+    align-items: center;
+    padding: 64px 0 96px;
+    scroll-margin-top: var(--nav-h);
+  }
+  .intro > .wrap { width: 100%; }
+  .intro h1 {
+    font-size: clamp(2.6rem, 5.6vw, var(--t-4xl));
+    font-weight: 680;
+    letter-spacing: -0.032em;
+    line-height: 1.02;
+  }
+  /* The headline keeps its three lines on wide screens */
+  .h1-line { display: block; }
+  .intro-lead {
+    margin-top: 28px;
+    max-width: 60ch;
+    font-size: var(--t-md);
+    line-height: 1.5;
+    color: var(--graphite);
+  }
+  .intro-actions { margin-top: 36px; display: flex; flex-wrap: wrap; gap: 12px; }
+  .intro-location { margin-top: 28px; font-size: var(--t-sm); color: var(--graphite); }
+
+  .ai {
+    padding-top: 32px;
+    padding-bottom: 128px;
+    scroll-margin-top: var(--nav-h);
+  }
+  .cases {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 12px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .cases > :global(.tile--product) { grid-column: 1 / -1; }
+
+  @media (max-width: 860px) {
+    .cases { grid-template-columns: minmax(0, 1fr); }
+  }
+  @media (max-width: 720px) {
+    .intro { padding: 48px 0 72px; }
+    .ai { padding-bottom: 88px; }
+    .cases { padding: 0 8px; gap: 8px; }
+  }
+</style>

@@ -1,0 +1,23 @@
+---
+// Root: send visitors to /es/ or /en/ based on the browser language (English by default).
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Germán Verón, Product Manager</title>
+    <script is:inline>
+      (function () {
+        var langs = navigator.languages || [navigator.language || ''];
+        var es = langs.some(function (l) { return /^es\b/i.test(l); });
+        location.replace((es ? '/es/' : '/en/') + location.hash);
+      })();
+    </script>
+    <noscript><meta http-equiv="refresh" content="0; url=/en/" /></noscript>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body style="font-family: sans-serif; padding: 24px">
+    <p><a href="/en/">English</a> · <a href="/es/">Español</a></p>
+  </body>
+</html>

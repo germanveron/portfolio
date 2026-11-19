@@ -79,10 +79,10 @@ const flows = sorted.filter((c) => c.kind === 'flow');
   }
   .intro-body { width: 100%; margin-block: auto; }
   .intro h1 {
-    font-size: clamp(2.6rem, 5.6vw, var(--t-4xl));
-    font-weight: 680;
-    letter-spacing: -0.032em;
-    line-height: 1.02;
+    font-size: clamp(2.125rem, 5vw, 3.6rem);
+    font-weight: 600;
+    letter-spacing: -0.026em;
+    line-height: 1.06;
   }
   /* The headline keeps its three lines on wide screens */
   .h1-line { display: block; }
@@ -117,12 +117,18 @@ const flows = sorted.filter((c) => c.kind === 'flow');
   }
   @media (prefers-reduced-motion: reduce) { .cue { animation: none; } }
   .intro-cta-inline { display: none; }
+  /* Inside the button the arrow moves less, so it stays centred on the text */
+  .intro-cta-inline .cue { animation-name: cue-small; }
+  @keyframes cue-small {
+    0%, 100% { transform: translateY(-1px); opacity: 0.7; }
+    50% { transform: translateY(2px); opacity: 1; }
+  }
   @media (max-width: 720px) {
     .intro { min-height: 0; }
     .intro-lead { font-size: 1.125rem; margin-top: 20px; }
     .intro-cta-inline { display: inline-flex; margin-top: 28px; }
     .intro-next { display: none; }
-    .intro-rule { margin-top: 32px; }
+    .intro-rule { display: none; }
   }
 
   .ai {

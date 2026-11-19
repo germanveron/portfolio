@@ -2,7 +2,6 @@
 import type { ImageMetadata } from 'astro';
 import { es } from '../../content/es';
 import { en } from '../../content/en';
-import { links } from '../../content/shared';
 import Base from '../../layouts/Base.astro';
 import CaseTile from '../../components/CaseTile.astro';
 import Experience from '../../components/Experience.astro';
@@ -27,7 +26,6 @@ const order = ['bitacora', 'resenas', 'entrevistas', 'agente-bugs', 'informe-res
 const sorted = [...t.cases].sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id));
 const products = sorted.filter((c) => c.kind === 'product');
 const flows = sorted.filter((c) => c.kind === 'flow');
-const cv = lang === 'es' ? links.cvEs : links.cvEn;
 ---
 <Base t={t} other={other} title={t.meta.title} description={t.meta.description} paths={{ es: '/es/', en: '/en/' }} home>
     <main id="main">
@@ -41,7 +39,6 @@ const cv = lang === 'es' ? links.cvEs : links.cvEn;
             <svg class="cue" aria-hidden="true" width="18" height="18" viewBox="0 0 22 22"><path d="M5 8l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
           <p class="intro-location">{t.intro.location}</p>
-          <a class="btn btn-secondary btn-sm intro-cv" href={cv} download>{t.intro.ctaCv}</a>
         </div>
         <!-- The main call to action sits at the bottom of the first screen and points down to the cases -->
         <a class="intro-next" href={`#${t.ids.ai}`}>
@@ -96,7 +93,6 @@ const cv = lang === 'es' ? links.cvEs : links.cvEn;
     color: var(--graphite);
   }
   .intro-location { margin-top: 24px; font-size: var(--t-sm); color: var(--graphite); }
-  .intro-cv { margin-top: 14px; }
 
   .intro-next {
     align-self: center;

@@ -2,7 +2,7 @@
 
 Personal portfolio focused on **applied AI for product**: five products and workflows I designed and built, plus my experience in fintech and e-commerce (Personal Pay, Mercado Libre).
 
-Available in Spanish (`/es/`) and English (`/en/`).
+**Live site: [germanveron.com](https://germanveron.com)** · available in [Spanish](https://germanveron.com/es/) and [English](https://germanveron.com/en/).
 
 ## Applied AI cases
 

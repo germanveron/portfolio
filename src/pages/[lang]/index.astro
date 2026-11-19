@@ -40,7 +40,6 @@ const flows = sorted.filter((c) => c.kind === 'flow');
           </a>
           <p class="intro-location">{t.intro.location}</p>
         </div>
-        <div class="wrap intro-rule"><hr /></div>
         <!-- The main call to action sits at the bottom of the first screen and points down to the cases -->
         <a class="intro-next" href={`#${t.ids.ai}`}>
           <span class="btn btn-primary">{t.intro.ctaCases}</span>
@@ -95,12 +94,9 @@ const flows = sorted.filter((c) => c.kind === 'flow');
   }
   .intro-location { margin-top: 24px; font-size: var(--t-sm); color: var(--graphite); }
 
-  /* Hairline that closes the cover, between the text and the CTA */
-  .intro-rule { width: 100%; }
-  .intro-rule hr { margin: 0; border: 0; border-top: 1px solid var(--line); }
   .intro-next {
     align-self: center;
-    margin-top: 40px;
+    margin-top: 56px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -128,7 +124,6 @@ const flows = sorted.filter((c) => c.kind === 'flow');
     .intro-lead { font-size: 1.125rem; margin-top: 20px; }
     .intro-cta-inline { display: inline-flex; margin-top: 28px; }
     .intro-next { display: none; }
-    .intro-rule { display: none; }
   }
 
   .ai {

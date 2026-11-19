@@ -43,7 +43,12 @@ const host = c.link ? new URL(c.link).host : '';
 
   {c.kind === 'flow' && c.miniFlow && (
     <ol class="mini-flow" aria-label={c.flow?.title}>
-      {c.miniFlow.map((node) => <li><span>{node}</span></li>)}
+      {c.miniFlow.map((node, i) => (
+        <li>
+          {i > 0 && <svg class="arrow" aria-hidden="true" width="28" height="12" viewBox="0 0 28 12"><path d="M3 6h21M19 1.5L24 6l-5 4.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>}
+          <span>{node}</span>
+        </li>
+      ))}
     </ol>
   )}
 </article>
@@ -152,7 +157,7 @@ const host = c.link ? new URL(c.link).host : '';
   }
 
   /* Flow tiles: half width, diagram instead of a screenshot */
-  .tile--flow { padding: 56px 28px 48px; }
+  .tile--flow { padding: 56px 28px 48px; container-type: inline-size; }
   .tile--flow h3 { font-size: clamp(1.75rem, 2.6vw, var(--t-2xl)); }
   .mini-flow {
     list-style: none;
@@ -177,12 +182,13 @@ const host = c.link ? new URL(c.link).host : '';
     border: 1px solid var(--line);
     border-radius: var(--r-ctl);
   }
-  /* Connector line between nodes */
-  .mini-flow li + li::before {
-    content: '';
-    width: 18px;
-    height: 1.5px;
-    background: #9a9da5;
+  /* Arrow between nodes: the flow reads left to right */
+  .mini-flow .arrow { flex: none; margin: 0 4px; color: #8a8d95; }
+  /* When the card is too narrow for one row, the flow stacks top to bottom instead of wrapping mid-sequence */
+  @container (max-width: 540px) {
+    .mini-flow { flex-direction: column; flex-wrap: nowrap; margin-top: 32px; }
+    .mini-flow li { flex-direction: column; }
+    .mini-flow .arrow { transform: rotate(90deg); margin: 10px 0; }
   }
   @media (max-width: 720px) {
     .tile { padding: 48px 20px 0; }

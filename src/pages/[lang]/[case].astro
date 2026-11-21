@@ -43,12 +43,12 @@ const backHref = `/${t.lang}/#${c.id}`;
         )}
       </header>
 
-      <CasePanel c={c} t={t} />
-
-      <a class="back back--bottom" href={backHref} data-back>
-        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16"><path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        {t.ui.back}
-      </a>
+      <CasePanel c={c} t={t}>
+        <a slot="footer" class="back" href={backHref} data-back>
+          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16"><path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          {t.ui.back}
+        </a>
+      </CasePanel>
     </div>
   </main>
 </Base>
@@ -69,7 +69,6 @@ const backHref = `/${t.lang}/#${c.id}`;
     font-size: var(--t-sm);
   }
   .back:hover { background: var(--mist); color: var(--ink); }
-  .back--bottom { margin-top: 48px; }
 
   .case-head { margin: 48px 0 40px; max-width: 760px; }
   .case-head h1 {

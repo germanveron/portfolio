@@ -89,10 +89,9 @@ const rows = [
     </ul>
   </div>
 
-  {c.link && (
-    <p class="panel-link">
-      <a class="btn btn-primary" href={c.link} target="_blank" rel="noopener">{t.ui.openApp}<span class="visually-hidden"> {c.title}</span></a>
-    </p>
+  {/* Closing action of the panel (the case page puts its "Back" button here) */}
+  {Astro.slots.has('footer') && (
+    <div class="panel-link"><slot name="footer" /></div>
   )}
 </div>
 

@@ -30,6 +30,8 @@ const { t, other, title, description, paths, home = false } = Astro.props;
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!-- Umami analytics (self-hosted, no cookies). Only counts visits on the live domain, not local previews. -->
+    <script is:inline defer src="https://stats.germanveron.com/script.js" data-website-id="33b719ce-7ebf-4631-8667-9f398bbff8ca" data-domains="germanveron.com,www.germanveron.com"></script>
   </head>
   <body>
     <a class="skip-link" href="#main">{t.nav.skip}</a>

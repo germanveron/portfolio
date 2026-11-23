@@ -77,10 +77,10 @@ export const es: Site = {
             period: 'Ene 2025 – Ago 2026',
             scale: '~3M usuarios',
             achievements: [
-              'Llevé API Checkout de desarrollo a producción, con un equipo de Tech Lead, devs, QA y UX, hasta representar <strong>~90% del revenue</strong> de la línea B2B.',
-              'Lancé BNPL en Tienda Personal junto a Lending, Riesgo y Fraude: el ticket promedio subió un <strong>80%</strong>.',
-              'Detecté en el funnel que el saldo insuficiente concentraba ~20% de los casos y lo bajé a <strong>~5%</strong> impulsando Extra Pay, que completa el faltante con un préstamo.',
-              'Lideré el robustecimiento de la API y un Developer Portal con un partner estratégico, que habilitó <strong>+10 comercios nuevos</strong> integrados por mes.',
+              'Convertí API Checkout en el principal producto B2B de sellers: tras integrar Pago de Servicios, su share de revenue pasó de ~5% a <strong>~90%</strong> en 1 año.',
+              'Lancé BNPL en Tienda Personal junto a Lending, Riesgo y Fraude: en las primeras semanas, el ticket promedio con BNPL fue <strong>~80% mayor</strong> que con saldo en cuenta.',
+              'Detecté en el funnel de conversión que el motivo saldo insuficiente concentraba ~20% de las caídas del checkout y lo bajé a <strong>~5%</strong> integrando Extra Pay, el préstamo que completa el faltante.',
+              'Lideré con un partner el robustecimiento de la API y un Developer Portal que bajó el tiempo de integración de comercios de 2-3 meses a <strong>1-2 semanas</strong>.',
             ],
           },
           {
@@ -88,7 +88,8 @@ export const es: Site = {
             period: 'Abr 2024 – Dic 2024',
             scale: '~10k sellers',
             achievements: [
-              'Lancé el seguimiento de pedidos de Kit QR y Smartpos: el motivo “estado de mi pedido” en los detractores del NPS B2B bajó de ~10% a <strong>~1%</strong>.',
+              'Lancé el seguimiento de pedidos de Kit QR y POS en la app: el motivo “estado de mi pedido” en los detractores del NPS de sellers bajó de ~10% a <strong>~1%</strong>.',
+              'Habilité <strong>+2k ventas de POS</strong> con el flujo de compra en la app, único canal de venta del producto y primer flujo de Personal Pay medido punta a punta en GA4.',
               'Implementé la ingesta de datos de Colaboradores, que permitió medir el uso del producto por primera vez.',
             ],
           },
@@ -104,9 +105,9 @@ export const es: Site = {
             period: 'Mar 2022 – Feb 2024',
             scale: '~90k sellers en Fulfillment',
             achievements: [
-              'Bajé la tasa de contacto de Inventario de ~18% a ~10% (<strong>-44%</strong>) con análisis en SQL (BigQuery) y mejoras de experiencia.',
+              'Reduje la tasa de contacto de sellers por Inventario de ~18% a ~10% (<strong>-44%</strong>): detecté los dolores con SQL (BigQuery) y Tableau, e impulsé mejoras de experiencia con Producto y Operaciones.',
               'Lideré la Bonificación por Riesgo Seller, con un ahorro de <strong>~USD 30k por mes</strong> en costo operativo.',
-              'Detecté que ~90% de los productos informados como extraviados aparecían en 24 h y rediseñé el aviso, reduciendo contactos innecesarios en toda LATAM.',
+              'Detecté que ~90% de los productos informados como extraviados aparecían en menos de 24 h y rediseñé el aviso, reduciendo contactos innecesarios en toda LATAM.',
             ],
           },
         ],
@@ -120,7 +121,7 @@ export const es: Site = {
             title: 'Especialista de Operaciones Digitales',
             period: 'Dic 2021 – Mar 2022',
             achievements: [
-              'Lideré el área de integraciones digitales con billeteras virtuales, coordinando implementaciones de punta a punta y promoviendo mejoras de procesos, documentación y eficiencia operativa.',
+              'Lideré el área de integraciones digitales de la API de Pago de Servicios con billeteras virtuales, coordinando implementaciones de punta a punta y promoviendo mejoras de procesos, documentación y eficiencia operativa.',
             ],
           },
           {

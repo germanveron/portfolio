@@ -77,10 +77,10 @@ export const en: Site = {
             period: 'Jan 2025 – Aug 2026',
             scale: '~3M users',
             achievements: [
-              'Took API Checkout from development to production with a Tech Lead, devs, QA and UX, growing it to <strong>~90% of revenue</strong> in the B2B line.',
-              'Launched BNPL in Tienda Personal with Lending, Risk and Fraud: the average ticket rose by <strong>80%</strong>.',
-              'Found in the funnel that insufficient balance accounted for ~20% of cases and cut it to <strong>~5%</strong> by pushing Extra Pay, which covers the shortfall with a loan.',
-              'Led the API hardening and a Developer Portal with a strategic partner, enabling <strong>10+ new merchants</strong> integrated per month.',
+              'Turned API Checkout into the main B2B product for sellers: after integrating Bill Payments, its revenue share grew from ~5% to <strong>~90%</strong> in 1 year.',
+              'Launched BNPL in Tienda Personal with Lending, Risk and Fraud: in the first weeks, the average ticket with BNPL was <strong>~80% higher</strong> than with account balance.',
+              'Found in the conversion funnel that insufficient balance accounted for ~20% of checkout drop-offs and cut it to <strong>~5%</strong> by integrating Extra Pay, the loan that covers the missing balance.',
+              'Led an API hardening and a Developer Portal with a partner, cutting merchant integration time from 2-3 months to <strong>1-2 weeks</strong>.',
             ],
           },
           {
@@ -88,7 +88,8 @@ export const en: Site = {
             period: 'Apr 2024 – Dec 2024',
             scale: '~10k sellers',
             achievements: [
-              'Launched order tracking for QR Kit and Smartpos: the “order status” reason among B2B NPS detractors dropped from ~10% to <strong>~1%</strong>.',
+              'Launched in-app order tracking for QR Kit and POS: the “order status” reason among sellers’ NPS detractors dropped from ~10% to <strong>~1%</strong>.',
+              'Enabled <strong>2k+ POS sales</strong> with the in-app purchase flow, the product’s only sales channel and the first Personal Pay flow measured end to end in GA4.',
               'Implemented data ingestion for Collaborators, which made it possible to measure product usage for the first time.',
             ],
           },
@@ -104,9 +105,9 @@ export const en: Site = {
             period: 'Mar 2022 – Feb 2024',
             scale: '~90k sellers in Fulfillment',
             achievements: [
-              'Cut the Inventory contact rate from ~18% to ~10% (<strong>-44%</strong>) through SQL (BigQuery) analysis and experience improvements.',
+              'Reduced the sellers’ contact rate for Inventory issues from ~18% to ~10% (<strong>-44%</strong>): found the pain points with SQL (BigQuery) and Tableau, and drove experience improvements with Product and Operations.',
               'Led the Seller Risk Bonus program, saving <strong>~USD 30k per month</strong> in operating costs.',
-              'Found that ~90% of products reported as lost showed up within 24 hours and redesigned the notice, reducing unnecessary contacts across LATAM.',
+              'Found that ~90% of products reported as lost were resolved in less than 24 hours and redesigned the notice, reducing unnecessary contacts across LATAM.',
             ],
           },
         ],
@@ -120,7 +121,7 @@ export const en: Site = {
             title: 'Digital Operations Specialist',
             period: 'Dec 2021 – Mar 2022',
             achievements: [
-              'Led the digital integrations area with virtual wallets, coordinating end-to-end implementations and driving improvements in processes, documentation and operational efficiency.',
+              'Led the digital integrations area for the Bill Payments API with virtual wallets, coordinating end-to-end implementations and driving improvements in processes, documentation and operational efficiency.',
             ],
           },
           {

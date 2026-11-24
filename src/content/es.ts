@@ -224,6 +224,7 @@ export const es: Site = {
       'Design Thinking, Red Innova Live Learning',
       'Negociaciones Efectivas, Bocanera & Asociados',
       'Habilidades en Gestión de Liderazgo, Universidad Siglo 21',
+      'Auditor Interno SIG (ISO 9001, ISO 14001 y OHSAS 18001), Bureau Veritas',
     ],
   },
   contact: {

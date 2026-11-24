@@ -214,7 +214,7 @@ export const en: Site = {
     facts: [
       { label: 'Based in', value: 'Munich, Germany' },
       { label: 'Citizenship', value: 'Spanish (EU)' },
-      { label: 'Languages', value: 'Spanish native, English B2' },
+      { label: 'Languages', value: 'Spanish native, English advanced' },
       { label: 'Education', value: 'Industrial Engineer, UADE (2018)' },
     ],
     certsTitle: 'Certifications and courses',

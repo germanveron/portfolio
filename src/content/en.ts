@@ -32,7 +32,7 @@ export const en: Site = {
     lead: 'I bring experience in fintech, e‑commerce and payments: I led API Checkout and BNPL at Personal Pay, after 10+ years in processes, operations and Customer Experience, including Mercado Libre. Here are five AI products and workflows I designed and built myself.',
     ctaCases: 'See applied AI',
     ctaCv: 'Download CV',
-    location: 'Currently based in Munich, Germany, and open to remote roles across Europe, or on-site or hybrid roles in Munich.',
+    location: 'Currently based in Germany, and open to remote roles across Europe, or on-site/hybrid roles in Munich.',
   },
   ai: {
     title: 'Applied AI',

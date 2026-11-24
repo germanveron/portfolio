@@ -32,7 +32,7 @@ export const es: Site = {
     lead: 'Tengo experiencia en fintech, e‑commerce y pagos: lideré API Checkout y BNPL en Personal Pay, después de más de 10 años en procesos, operaciones y Customer Experience, incluido Mercado Libre. Acá están cinco productos y flujos de IA que diseñé y construí yo mismo.',
     ctaCases: 'Ver IA aplicada',
     ctaCv: 'Descargar CV',
-    location: 'Actualmente resido en Munich, Alemania, y busco trabajo en remoto desde Europa, o presencial o híbrido en Munich.',
+    location: 'Actualmente resido en Alemania, y busco trabajo en remoto desde Europa, o presencial/híbrido en Munich.',
   },
   ai: {
     title: 'IA Aplicada',

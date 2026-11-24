@@ -32,7 +32,7 @@ export const es: Site = {
     lead: 'Tengo experiencia en fintech, e‑commerce y pagos: lideré API Checkout y BNPL en Personal Pay, después de más de 10 años en procesos, operaciones y Customer Experience, incluido Mercado Libre. Acá están cinco productos y flujos de IA que diseñé y construí yo mismo.',
     ctaCases: 'Ver IA aplicada',
     ctaCv: 'Descargar CV',
-    location: 'Actualmente resido en Alemania y estoy abierto a trabajar en remoto en toda Europa.',
+    location: 'Actualmente resido en Munich, Alemania, y busco trabajo en remoto desde Europa, o presencial o híbrido en Munich.',
   },
   ai: {
     title: 'IA Aplicada',
@@ -107,7 +107,7 @@ export const es: Site = {
             achievements: [
               'Reduje la tasa de contacto de sellers por Inventario de ~18% a ~10% (<strong>-44%</strong>): detecté los dolores con SQL (BigQuery) y Tableau, e impulsé mejoras de experiencia con Producto y Operaciones.',
               'Lideré la Bonificación por Riesgo Seller, con un ahorro de <strong>~USD 30k por mes</strong> en costo operativo.',
-              'Detecté que ~90% de los productos informados como extraviados aparecían en menos de 24 h y rediseñé el aviso, reduciendo contactos innecesarios en toda LATAM.',
+              'Detecté que ~90% de los productos informados como extraviados se resolvían en menos de 24 h y rediseñé el aviso, reduciendo contactos innecesarios en toda LATAM.',
             ],
           },
         ],
@@ -208,7 +208,7 @@ export const es: Site = {
       },
       {
         title: 'Qué busco',
-        text: 'Roles de Product Manager o Product Owner en fintech y pagos. Estoy abierto a trabajar en remoto en Europa.',
+        text: 'Roles de Product Manager o Product Owner en fintech, pagos y sectores afines. En remoto desde Europa, o presencial o híbrido solo en Munich.',
       },
     ],
     facts: [

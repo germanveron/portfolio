@@ -208,7 +208,7 @@ export const en: Site = {
       },
       {
         title: 'What I’m looking for',
-        text: 'Product Manager or Product Owner roles in fintech, payments and related fields. Remote across Europe, or on-site or hybrid only in Munich.',
+        text: 'Product Manager or Product Owner roles in fintech, payments and related fields. Remote across Europe, or on-site/hybrid only in Munich.',
       },
     ],
     facts: [

@@ -208,7 +208,7 @@ export const es: Site = {
       },
       {
         title: 'Qué busco',
-        text: 'Roles de Product Manager o Product Owner en fintech, pagos y sectores afines. En remoto desde Europa, o presencial o híbrido solo en Munich.',
+        text: 'Roles de Product Manager o Product Owner en fintech, pagos y sectores afines. En remoto desde Europa, o presencial/híbrido solo en Munich.',
       },
     ],
     facts: [

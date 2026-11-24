@@ -212,7 +212,7 @@ export const es: Site = {
       },
     ],
     facts: [
-      { label: 'Base', value: 'Múnich, Alemania' },
+      { label: 'Base', value: 'Munich, Alemania' },
       { label: 'Ciudadanía', value: 'Española (UE)' },
       { label: 'Idiomas', value: 'Español nativo, inglés B2' },
       { label: 'Formación', value: 'Ingeniero Industrial, UADE (2018)' },
